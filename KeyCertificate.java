@@ -54,7 +54,7 @@ public class KeyCertificate {
             throws Exception
     {
  
-
+    	
         String[] certs = new String[1];
         String[] keys = new String[1];
         String[] key_ids = null;
@@ -67,13 +67,19 @@ public class KeyCertificate {
     	keys[0] = readFile("C:\\Users\\vli\\iControl-java\\vli_self_server.key");
         certs[0] =  readFile("C:\\Users\\vli\\iControl-java\\vli_self_server.crt");
             
-
+      try {
         certstub.key_delete(mode, key_ids);
     	certstub.certificate_delete(mode, cert_ids);
-
+      }catch (Exception e) {
+    	  System.out.println("certificate and key not exist");
+      }
+      
+      
     	certstub.certificate_import_from_pem(mode, cert_ids, certs, true);
     	certstub.key_import_from_pem(mode, key_ids, keys, true);
     	certstub.certificate_bind(mode, cert_ids, key_ids);
+    	System.out.println("certificate and key import succeeded!");
+    	
     }
 
   
