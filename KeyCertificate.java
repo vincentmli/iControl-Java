@@ -26,6 +26,7 @@ public class KeyCertificate {
 	      if ( bInit )
 	      {
 	        addCertificates();
+	        addClientSSLProfile();
 	        
 	      }
 	    }
@@ -82,7 +83,22 @@ public class KeyCertificate {
     	
     }
 
-  
+    private void addClientSSLProfile()
+            throws Exception
+    {
+ 
+    	
+        String[] profileClientSslName = null;
+        profileClientSslName = new String[]{"vli_self_clientssl"};
+
+        iControl.LocalLBProfileClientSSLBindingStub clientsslstub = m_interfaces.getLocalLBProfileClientSSL();
+       
+       iControl.LocalLBProfileString key = new iControl.LocalLBProfileString("vli_self_server_key.key", false);
+       iControl.LocalLBProfileString cert = new iControl.LocalLBProfileString("vli_self_server_cert.crt", false);
+
+       clientsslstub.create_v2(profileClientSslName, new iControl.LocalLBProfileString[]{key}, new iControl.LocalLBProfileString[]{cert});
+    	
+    }
 
 	/**
 	 * @param args
